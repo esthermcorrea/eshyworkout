@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Treino da Esther</title>
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,Arial;background:#fff5fa;color:#333;margin:0}
+header{background:#ff5fa2;color:#fff;padding:18px;text-align:center}
+.day{margin:14px;padding:14px;background:#fff;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+h2{margin:0 0 8px}
+label{display:block;padding:6px 0}
+progress{width:100%;height:18px}
+.small{color:#666;font-size:.9em}
+</style></head><body>
+<header><h1>🍑 Treino Shape Slim</h1><div>Esther • Cardio 30 min todos os dias</div></header>
+<div id="app"></div>
+<script>
+const treino={
+"Segunda":["Hip Thrust 5x10","Kickback 4x15","Abdutora 5x20","Glute Bridge 4x15","Frog Pumps 3x40","Prancha 3x1min","Cardio 30 min"],
+"Terça":["Puxada Frontal 4x12","Remada Baixa 4x12","Face Pull 4x15","Pulldown 3x15","Elevação Lateral 3x15","Cable Crunch 3x15","Elevação de Pernas 3x15","Prancha 3x1min","Cardio 30 min"],
+"Quarta":["Hip Thrust Unilateral 4x12","Kickback 4x15","Abdutora 5x20","Abdução Polia 4x15","Frog Pumps 3x40","Ponte Isométrica 3x45s","Cardio 30 min"],
+"Quinta":["Remada Unilateral 4x12","Puxada Aberta 4x12","Face Pull 3x15","Tríceps Corda 3x15","Rosca Martelo 3x15","Elevação Lateral 3x15","Prancha Lateral","Abdominal Infra","Russian Twist","Cardio 30 min"],
+"Sexta":["Hip Thrust 5x8-10","Kickback 4x20","Abdutora 5x25","Glute Bridge 4x20","Frog Pumps 3x50","Fire Hydrant 3x20","Cardio 30 min"]
+};
+const app=document.getElementById("app");
+Object.entries(treino).forEach(([dia,items])=>{
+ let done=0;
+ const d=document.createElement("div");d.className="day";
+ d.innerHTML=`<h2>${dia}</h2><progress max="${items.length}" value="0"></progress><div class='small'></div>`;
+ const p=d.querySelector("progress"),s=d.querySelector(".small");
+ items.forEach((it,i)=>{
+  const id=dia+i;
+  const l=document.createElement("label");
+  const c=document.createElement("input");c.type="checkbox";c.checked=localStorage.getItem(id)=="1";
+  if(c.checked)done++;
+  c.onchange=()=>{localStorage.setItem(id,c.checked?"1":"0");location.reload();}
+  l.appendChild(c);l.append(" "+it);d.appendChild(l);
+ });
+ p.value=done;s.textContent=`${done}/${items.length} concluídos`;
+ app.appendChild(d);
+});
+</script></body></html>
